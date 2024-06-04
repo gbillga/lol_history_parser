@@ -1,6 +1,7 @@
 from dotenv import load_dotenv
 from utils import get_api_key, create_account_info, get_list_summoners
 from user import User
+from collection import Collection
 import os
 
 load_dotenv()
@@ -26,3 +27,6 @@ for summoner in list_summoners:
 
     if match in player.find_unfetched_matchs():
         player.fetch_match(match_id=match, api_key=api_key)
+
+user_collection = Collection(api_key=api_key)
+user_collection.fetch_collection_matchs(api_key=api_key)
