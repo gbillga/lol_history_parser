@@ -8,7 +8,6 @@ load_dotenv()
 api_key = get_api_key()
 
 list_summoners = get_list_summoners("account_list.json")
-
 for summoner in list_summoners:
     riot_id = create_account_info(summoner)
     folder_name = riot_id["summoners_name"] + "#" + riot_id["summoners_tag"]
