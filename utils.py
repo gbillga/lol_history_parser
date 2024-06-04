@@ -1,6 +1,6 @@
 from urllib.parse import quote
+import json
 import os
-
 
 def encode_string(input: str) -> str:
     """
@@ -23,7 +23,7 @@ def encode_string(input: str) -> str:
     return quote(input)
 
 
-def get_riotid() -> dict:
+def create_account_info(summoner) -> dict:
     """
     Retrieves and encodes the Riot ID from environment variables.
 
@@ -46,10 +46,11 @@ def get_riotid() -> dict:
          'encoded_summoners_name': 'encoded_name', 'encoded_summoners_tag': 'encoded_tag'}
     """
     output = dict()
-    output["summoners_name"] = os.getenv("SUMMONERS_NAME")
-    output["summoners_tag"] = os.getenv("TAG")
-    output["encoded_summoners_name"] = encode_string(os.getenv("SUMMONERS_NAME"))
-    output["encoded_summoners_tag"] = encode_string(os.getenv("TAG"))
+    output["summoners_name"] = summoner["SUMMONERS_NAME"]
+    output["summoners_region"] = summoner["REGION"]
+    output["summoners_tag"] = summoner["TAG"]
+    output["encoded_summoners_name"] = encode_string(summoner["SUMMONERS_NAME"])
+    output["encoded_summoners_tag"] = encode_string(summoner["TAG"])
     return output
 
 
@@ -93,3 +94,35 @@ def check_if_folder_exists(folder_path: str) -> bool:
         - It returns True even if the specified path points to a file rather than a folder.
     """
     return os.path.exists(folder_path)
+
+
+def get_list_summoners(file_path: str) -> list:
+    """
+    Reads a JSON file containing a list of summoners and returns it as a Python list.
+
+    Args:
+        file_path (str): The path to the JSON file to be read.
+
+    Returns:
+        list: A list of summoners loaded from the JSON file.
+
+    Example:
+        >>> summoners = get_list_summoners("summoners.json")
+        >>> print(summoners)
+        [
+            {
+                "SUMMONERS_NAME": "ScanVisor",
+                "TAG": "EUW",
+                "REGION": "europe"
+            },
+            {
+                "SUMMONERS_NAME": "GotSaveTheQueen",
+                "TAG": "NA1",
+                "REGION": "americas"
+            },
+            ...
+        ]
+    """
+    with open(file_path, encoding='utf-8') as f:
+        list_summoners = json.load(f)
+    return list_summoners

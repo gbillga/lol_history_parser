@@ -30,6 +30,7 @@ class User:
         """
         self.summoners_name = riot_id["summoners_name"]
         self.summoners_tag = riot_id["summoners_tag"]
+        self.summoners_region = riot_id["summoners_region"]
         self.encoded_summoners_name = riot_id["encoded_summoners_name"]
         self.encoded_summoners_tag = riot_id["encoded_summoners_tag"]
         self.puuid = (
@@ -68,10 +69,10 @@ class User:
         riot_id = {
             "summoners_name": user_data["summoners_name"],
             "summoners_tag": user_data["summoners_tag"],
+            "summoners_region": user_data["summoners_region"],
             "encoded_summoners_name": user_data["encoded_summoners_name"],
             "encoded_summoners_tag": user_data["encoded_summoners_tag"],
         }
-
         # Create and return a new User object
         return cls(
             riot_id,
@@ -140,7 +141,7 @@ class User:
         """
 
         req = get(
-            f"https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{self.summoners_name}/{self.summoners_tag}?api_key={api_key}"
+            f"https://{self.summoners_region}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{self.summoners_name}/{self.summoners_tag}?api_key={api_key}"
         )
 
         if req.status_code == 200:
@@ -172,7 +173,7 @@ class User:
         """
         print(f"Sending api call with start index {start_index}")
         req = get(
-            f"https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/{self.puuid}/ids?queue={queue}&start={start_index}&count=100&api_key={api_key}"
+            f"https://{self.summoners_region}.api.riotgames.com/lol/match/v5/matches/by-puuid/{self.puuid}/ids?queue={queue}&start={start_index}&count=100&api_key={api_key}"
         )
 
         if req.status_code == 200:
@@ -241,7 +242,7 @@ class User:
         matchs_folder_content = os.listdir(user_matchs_folder_path)
         already_fetched_files = []
         matchs_to_be_fetched = []
-        pattern = "^[a-zA-Z]{2,5}_[6-15]+\.json$"
+        pattern = "^[a-zA-Z]{2,5}_[0-9]+\.json$"
 
         # List already fetched matchs
         for file in matchs_folder_content:
@@ -284,7 +285,7 @@ class User:
         user_matchs_folder_path = os.path.join("data", user_data_folder_name, "matchs")
 
         req = get(
-            f"https://europe.api.riotgames.com/lol/match/v5/matches/{match_id}?api_key={api_key}"
+            f"https://{self.summoners_region}.api.riotgames.com/lol/match/v5/matches/{match_id}?api_key={api_key}"
         )
 
         if req.status_code == 200:
