@@ -70,7 +70,8 @@ def get_api_key() -> str:
     """
     return os.getenv("API_KEY")
 
-def check_if_folder_exists(folder_path:str) -> bool:
+
+def check_if_folder_exists(folder_path: str) -> bool:
     """
     Checks if a folder exists at the specified path.
 

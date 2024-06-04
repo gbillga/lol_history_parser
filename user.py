@@ -2,6 +2,7 @@ import os
 from utils import check_if_folder_exists
 from requests import get
 import json
+import re
 
 
 class User:
@@ -186,5 +187,115 @@ class User:
                 )
             else:
                 return matchs_list
+        else:
+            raise Exception(f"Non-success status code: {req.status_code}")
+
+    def create_matchs_folder_if_missing(self):
+        """
+        Creates a folder for storing match files if it does not already exist.
+
+        This function constructs a folder path based on the summoner's name and tag,
+        and checks if the folder exists. If the folder does not exist, it creates
+        the folder and prints a confirmation message. If the folder already exists,
+        it prints a message indicating so.
+
+        Attributes:
+            self.summoners_name (str): The summoner's name.
+            self.summoners_tag (str): The summoner's tag.
+
+        Side effects:
+            Creates a directory at the specified path if it doesn't exist.
+            Prints a message indicating whether the directory was created or already existed.
+        """
+        user_data_folder_name = f"{self.summoners_name}#{self.summoners_tag}"
+        user_matchs_folder_path = os.path.join("data", user_data_folder_name, "matchs")
+        user_data_folder_exists = check_if_folder_exists(user_matchs_folder_path)
+        if user_data_folder_exists:
+            print(f"User {user_data_folder_name} matchs folder already exists.")
+        else:
+            os.mkdir(user_matchs_folder_path)
+            print(f"User {user_data_folder_name} matchs folder has been created.")
+
+    def find_unfetched_matchs(self) -> list:
+        """
+        Finds matches that have not yet been fetched.
+
+        This function checks the match files already present in the user's match folder
+        and compares them against a list of match files that should be fetched. It
+        returns a list of match files that are not yet fetched.
+
+        Attributes:
+            self.summoners_name (str): The summoner's name.
+            self.summoners_tag (str): The summoner's tag.
+            self.flex_matchs_list (list): List of flex match files to be fetched.
+            self.solo_duo_matchs_list (list): List of solo/duo match files to be fetched.
+
+        Returns:
+            list: A list of match files that have not yet been fetched.
+
+        Side effects:
+            None.
+        """
+        user_data_folder_name = f"{self.summoners_name}#{self.summoners_tag}"
+        user_matchs_folder_path = os.path.join("data", user_data_folder_name, "matchs")
+        matchs_folder_content = os.listdir(user_matchs_folder_path)
+        already_fetched_files = []
+        matchs_to_be_fetched = []
+        pattern = "^[a-zA-Z]{2,5}_[6-15]+\.json$"
+
+        # List already fetched matchs
+        for file in matchs_folder_content:
+            if re.match(pattern=pattern, string=file):
+                already_fetched_files.append(file)
+
+        # Check if identity matchs are fetched, if not add to output list
+        for match in self.flex_matchs_list + self.solo_duo_matchs_list:
+            if match not in already_fetched_files:
+                matchs_to_be_fetched.append(match)
+
+        return matchs_to_be_fetched
+
+    def fetch_match(self, match_id: str, api_key: str):
+        """
+        Fetches a match from the Riot Games API and saves it to the user's match folder.
+
+        This function sends a request to the Riot Games API to fetch the match data
+        corresponding to the given match ID and saves the response as a JSON file
+        in the user's match folder. The size of the saved file is printed upon
+        successful fetch. If the request fails, an exception is raised.
+
+        Parameters:
+            match_id (str): The ID of the match to fetch.
+            api_key (str): The API key for authenticating the request.
+
+        Attributes:
+            self.summoners_name (str): The summoner's name.
+            self.summoners_tag (str): The summoner's tag.
+
+        Raises:
+            Exception: If the API request returns a non-success status code.
+
+        Side effects:
+            Sends a GET request to the Riot Games API.
+            Writes the fetched match data to a JSON file in the user's match folder.
+            Prints the size of the fetched match file.
+        """
+        user_data_folder_name = f"{self.summoners_name}#{self.summoners_tag}"
+        user_matchs_folder_path = os.path.join("data", user_data_folder_name, "matchs")
+
+        req = get(
+            f"https://europe.api.riotgames.com/lol/match/v5/matches/{match_id}?api_key={api_key}"
+        )
+
+        if req.status_code == 200:
+            saving_path = os.path.join(user_matchs_folder_path, f"{match_id}.json")
+            with open(saving_path, "w+") as json_file:
+                json.dump(req.json(), json_file)
+
+            file_size = round(os.stat(saving_path).st_size / (1024 * 1024), 2)
+            print(
+                f"Match {match_id} from user {user_data_folder_name} has been fetched, size : {file_size} Mo."
+            )
+
         else:
             raise Exception(f"Non-success status code: {req.status_code}")
