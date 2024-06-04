@@ -242,7 +242,7 @@ class User:
         matchs_folder_content = os.listdir(user_matchs_folder_path)
         already_fetched_files = []
         matchs_to_be_fetched = []
-        pattern = "^[a-zA-Z]{2,5}_[6-15]+\.json$"
+        pattern = "^[a-zA-Z]{2,5}_[0-9]+\.json$"
 
         # List already fetched matchs
         for file in matchs_folder_content:
