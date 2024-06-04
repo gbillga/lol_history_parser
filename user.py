@@ -242,12 +242,12 @@ class User:
         matchs_folder_content = os.listdir(user_matchs_folder_path)
         already_fetched_files = []
         matchs_to_be_fetched = []
-        pattern = "^[a-zA-Z]{2,5}_[0-9]+\.json$"
+        pattern = re.compile(r"^[a-zA-Z0-9]{2,5}_[0-9]+\.json$")
 
         # List already fetched matchs
         for file in matchs_folder_content:
             if re.match(pattern=pattern, string=file):
-                already_fetched_files.append(file)
+                already_fetched_files.append(file.split(".json")[0])
 
         # Check if identity matchs are fetched, if not add to output list
         for match in self.flex_matchs_list + self.solo_duo_matchs_list:
@@ -283,7 +283,7 @@ class User:
         """
         user_data_folder_name = f"{self.summoners_name}#{self.summoners_tag}"
         user_matchs_folder_path = os.path.join("data", user_data_folder_name, "matchs")
-
+        print(f"Match {match_id} will be fecthed")
         req = get(
             f"https://{self.summoners_region}.api.riotgames.com/lol/match/v5/matches/{match_id}?api_key={api_key}"
         )
@@ -297,6 +297,9 @@ class User:
             print(
                 f"Match {match_id} from user {user_data_folder_name} has been fetched, size : {file_size} Mo."
             )
-
+        elif req.status_code == 404:
+            print(
+                f"Match {match_id} from user {user_data_folder_name} can not be found."
+            )
         else:
             raise Exception(f"Non-success status code: {req.status_code}")

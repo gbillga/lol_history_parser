@@ -1,6 +1,7 @@
 from dotenv import load_dotenv
 from utils import get_api_key, create_account_info, get_list_summoners
 from user import User
+from collection import Collection
 import os
 
 load_dotenv()
@@ -8,21 +9,18 @@ load_dotenv()
 api_key = get_api_key()
 
 list_summoners = get_list_summoners("account_list.json")
+
+user_collection = Collection(api_key=api_key)
+
 for summoner in list_summoners:
     riot_id = create_account_info(summoner)
     folder_name = riot_id["summoners_name"] + "#" + riot_id["summoners_tag"]
-    player_identity_path = os.path.join("data", folder_name, "identity.json")
-    if not os.path.exists(player_identity_path):
+
+    if folder_name not in user_collection.user_paths.keys():
         player = User(riot_id=riot_id, api_key=api_key)
         player.save()
     else:
-        player = User.load_from_json(file_path=player_identity_path, api_key=api_key)
+        print(f"User {folder_name} is already in the user collection.")
 
-    player.create_data_folder_if_missing()
-    player.create_user_folder_if_missing()
-    player.create_matchs_folder_if_missing()
-
-    match = "EUW1_6957197478"
-
-    if match in player.find_unfetched_matchs():
-        player.fetch_match(match_id=match, api_key=api_key)
+user_collection.refresh_collection(api_key=api_key)
+user_collection.fetch_collection_matchs(api_key=api_key)
