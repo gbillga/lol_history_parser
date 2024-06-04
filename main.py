@@ -10,8 +10,11 @@ api_key = get_api_key()
 
 folder_name = riot_id["summoners_name"] + "#" + riot_id["summoners_tag"]
 neuneu_identity_path = os.path.join("data", folder_name, "identity.json")
-
-neuneu = User.load_from_json(file_path=neuneu_identity_path, api_key=api_key)
+if not os.path.exists(neuneu_identity_path):
+    neuneu = User(riot_id=riot_id, api_key=api_key)
+    neuneu.save()
+else:
+    neuneu = User.load_from_json(file_path=neuneu_identity_path, api_key=api_key)
 
 neuneu.create_data_folder_if_missing()
 neuneu.create_user_folder_if_missing()
