@@ -1,5 +1,8 @@
-SUMMONERS_NAME="ScanVisorGotSaveTheQueen"
-TAG="EUW"
+SUMMONERS_NAME="ScanVisor"
+TAG="EUW
+
+SUMMONERS_NAME=GotSaveTheQueen"
+TAG="NA1"
 
 SUMMONERS_NAME="Xx doudou95 xX"
 TAG="EUW"
