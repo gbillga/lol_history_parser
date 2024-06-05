@@ -114,6 +114,7 @@ class Collection:
                 match_file_path = user_matchs_folder_path + "/" + match
                 with open(match_file_path, encoding='utf-8') as f:
                     match_info = json.load(f)['info']
+                    match_info['summoner_folder']= user
                     participants = match_info['participants']
                     participant_info = dict()
                     del match_info['participants']
