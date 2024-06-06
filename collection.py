@@ -1,4 +1,6 @@
+import json
 import os
+import pandas as pd
 import re
 import time
 from user import User
@@ -73,3 +75,59 @@ class Collection:
 
                     user_object.fetch_match(match_id=match, api_key=api_key)
             print("\n\n")
+
+    def create_aggregate_data(self) -> None:
+        """
+        Aggregates match data for all users into a single CSV file.
+
+        This method processes match data files for each user in `self.user_objects`, extracts relevant
+        match and participant information, and combines the data into a pandas DataFrame. The resulting
+        DataFrame is then saved as a CSV file named "aggregate_data.csv" in the "data" directory.
+
+        The method performs the following steps:
+        1. Iterates over all users in `self.user_objects`.
+        2. Reads match files for each user from the corresponding directory.
+        3. Extracts match information and participant data for the user.
+        4. Combines the extracted data into a single DataFrame.
+        5. Saves the DataFrame as a CSV file.
+
+        Args:
+            None
+
+        Returns:
+            None
+
+        Raises:
+            FileNotFoundError: If any match file is not found.
+            KeyError: If expected keys ('info', 'participants', 'teams', etc.) are missing in the match files.
+
+        Example:
+            >>> obj = YourClassWithUserObjects()
+            >>> obj.create_aggregate_data()
+            # This will process the match data and create "data/aggregate_data.csv"
+        """
+        all_matches = []
+        for user in self.user_objects.keys():
+            user_object = self.user_objects[user]
+            user_matchs_folder_path = os.path.join("data", user, "matchs")
+            for match in os.listdir(user_matchs_folder_path):
+                match_file_path = user_matchs_folder_path + "/" + match
+                with open(match_file_path, encoding='utf-8') as f:
+                    match_info = json.load(f)['info']
+                    match_info['summoner_folder']= user
+                    participants = match_info['participants']
+                    participant_info = dict()
+                    del match_info['participants']
+                    del match_info['teams']
+                    for participant in participants:
+                        if participant['puuid'] == user_object.puuid:
+                            participant_info = participant
+                    if len(participant_info) > 0:
+                        match_info.update(participant_info)
+                        all_matches.append(match_info)
+                    else:
+                        print("Could not find corresponding participant information, disregarding game")
+        all_matches = pd.DataFrame(all_matches)
+        print(all_matches)
+        all_matches.to_csv("data/aggregate_data.csv", index=False)
+

@@ -24,3 +24,4 @@ for summoner in list_summoners:
 
 user_collection.refresh_collection(api_key=api_key)
 user_collection.fetch_collection_matchs(api_key=api_key)
+user_collection.create_aggregate_data()
