@@ -3,7 +3,8 @@ outs:
   path: data
   files:
   - relpath: raw/Borisd73#EUW/identity.json
-    md5: 69bdbdae9ce7a28aa9f2f1c7ff7b4ee8
+    md5: a3d39aab487a82212a53a0d34a0792f4
+    size: 3626
   - relpath: raw/Borisd73#EUW/matchs/EUW1_6343514194.json
     md5: b27e83a4cec13b40f5a352805bcb4722
   - relpath: raw/Borisd73#EUW/matchs/EUW1_6346558343.json
@@ -112,6 +113,9 @@ outs:
     md5: fe75f1aff866daf55838fde4b9da20e6
   - relpath: raw/Borisd73#EUW/matchs/EUW1_6646526282.json
     md5: dba5e661772b11bbdeef0ae361eac34d
+  - relpath: raw/Borisd73#EUW/matchs/EUW1_6646671219.json
+    md5: 25247ff4bf98cbec8cd4e1ff44477c37
+    size: 72469
   - relpath: raw/Borisd73#EUW/matchs/EUW1_6646826266.json
     md5: 1ae28a419b9e3a1b8c37d59e90d02968
   - relpath: raw/Borisd73#EUW/matchs/EUW1_6646903744.json
@@ -120,6 +124,9 @@ outs:
     md5: 5e411f249c651e3e5e0c118d0e6dccb8
   - relpath: raw/Borisd73#EUW/matchs/EUW1_6647671708.json
     md5: 41b4a817f0959b3ea87438ce68aa5149
+  - relpath: raw/Borisd73#EUW/matchs/EUW1_6648107724.json
+    md5: 529808798fd467881bbafc2756326c0d
+    size: 71398
   - relpath: raw/Borisd73#EUW/matchs/EUW1_6648944281.json
     md5: 70ed08257c77576c960b280f249b7109
   - relpath: raw/Borisd73#EUW/matchs/EUW1_6649129980.json
@@ -136,6 +143,9 @@ outs:
     md5: 33ab8eea950c19b61933f23848e0e3ed
   - relpath: raw/Borisd73#EUW/matchs/EUW1_6651257960.json
     md5: 35a8b0dd4a1e1993968f4e5b03d283e2
+  - relpath: raw/Borisd73#EUW/matchs/EUW1_6651473192.json
+    md5: a644dee0e080dcd5dd4ec2bef8e3fd02
+    size: 71471
   - relpath: raw/Borisd73#EUW/matchs/EUW1_6654513171.json
     md5: 19dbeb9896a76de1e46dbe1edce5ae41
   - relpath: raw/Borisd73#EUW/matchs/EUW1_6654589233.json
@@ -196,6 +206,12 @@ outs:
     md5: 91659c399b5d0747f202955a10b5bc6a
   - relpath: raw/Borisd73#EUW/matchs/EUW1_6792938365.json
     md5: 5dadd04b34350da96657914b6eb1254b
+  - relpath: raw/Borisd73#EUW/matchs/EUW1_6793817979.json
+    md5: a842a93b62ae4b8078e5ef2542a2e59e
+    size: 74483
+  - relpath: raw/Borisd73#EUW/matchs/EUW1_6793916812.json
+    md5: 4e723c415ffeb5c93ff3f80b14f65e08
+    size: 75251
   - relpath: raw/Borisd73#EUW/matchs/EUW1_6800694497.json
     md5: 4091cd6e5e31bcbbac4501e50ea9b1ff
   - relpath: raw/Borisd73#EUW/matchs/EUW1_6800725373.json
@@ -230,6 +246,9 @@ outs:
     md5: 41413496bc72051c84104c154fe161ea
   - relpath: raw/Borisd73#EUW/matchs/EUW1_6820390581.json
     md5: d664d8ca76c15e127c0dabfb02d93c43
+  - relpath: raw/Borisd73#EUW/matchs/EUW1_6820515781.json
+    md5: 5b38f9ffc767169d85da11ec2a15758d
+    size: 73685
   - relpath: raw/Borisd73#EUW/matchs/EUW1_6820548195.json
     md5: 9e5756ebc7bbd3bbe657b686c89b903d
   - relpath: raw/Borisd73#EUW/matchs/EUW1_6821108098.json
@@ -296,6 +315,12 @@ outs:
     md5: 54781dcec21db040eb7072e0c9df1cb8
   - relpath: raw/Borisd73#EUW/matchs/EUW1_6870100447.json
     md5: 59fc84868ce419bdd2ca1387417aeb3f
+  - relpath: raw/Borisd73#EUW/matchs/EUW1_6870197784.json
+    md5: 6f6e70201e96f09a78177d3ec1930d45
+    size: 70357
+  - relpath: raw/Borisd73#EUW/matchs/EUW1_6870237961.json
+    md5: a26c233f382df12db04b9aedc8fb7cad
+    size: 70735
   - relpath: raw/Borisd73#EUW/matchs/EUW1_6873609242.json
     md5: 6bb730ef5b5735a296d25965714cce67
   - relpath: raw/Borisd73#EUW/matchs/EUW1_6873640615.json
@@ -333,7 +358,8 @@ outs:
   - relpath: raw/Borisd73#EUW/matchs/EUW1_6951644552.json
     md5: 4a5b9eddee359d155759506aec93a819
   - relpath: raw/Borisdu74#EUW/identity.json
-    md5: 1382f21bb62c89f92b1f3be245a81cec
+    md5: d81f5ca395b7f09bf1bc3ac69bc9c0c0
+    size: 1272
   - relpath: raw/Borisdu74#EUW/matchs/EUW1_6380122606.json
     md5: d43d6369b4b088bb26d85d5fb15364a7
   - relpath: raw/Borisdu74#EUW/matchs/EUW1_6380235684.json
@@ -431,9 +457,11 @@ outs:
   - relpath: raw/Borisdu74#EUW/matchs/EUW1_6960973939.json
     md5: 82b52b782b26d67cfafab283a9a5d350
   - relpath: raw/EnergieZ#EUW/identity.json
-    md5: d15995ea3dce979b56f6bba7b166b17d
+    md5: 600945fe4472a1e45cdbf67456486f29
+    size: 795
   - relpath: raw/Ewïck#EUW/identity.json
-    md5: 7196150abcaecd9f926e04e25c30597a
+    md5: 2200c1bfde6c806bfb623b8bb6956c4b
+    size: 457
   - relpath: raw/Ewïck#EUW/matchs/EUW1_6641705851.json
     md5: 2bd83ffe03ab51977bbd4ae70908c6d8
   - relpath: raw/Ewïck#EUW/matchs/EUW1_6641769615.json
@@ -443,7 +471,8 @@ outs:
   - relpath: raw/Ewïck#EUW/matchs/EUW1_6654099487.json
     md5: 3b47a80e0be2b5c663e902423a871b77
   - relpath: raw/GotSaveTheQueen#NA1/identity.json
-    md5: 4924c2c7f17b994b95a8db2764313db8
+    md5: df787c575011e57136e76c1180d82fce
+    size: 9225
   - relpath: raw/GotSaveTheQueen#NA1/matchs/NA1_4765922235.json
     md5: 3a7a7c3cc2a0fc706d009aa3fc863c78
   - relpath: raw/GotSaveTheQueen#NA1/matchs/NA1_4765936153.json
@@ -1345,7 +1374,8 @@ outs:
   - relpath: raw/GotSaveTheQueen#NA1/matchs/NA1_5012745736.json
     md5: 0ae774dec7edf41de4e3670a7926be17
   - relpath: raw/Hopeless Effort#1472/identity.json
-    md5: 5e4088565960a6513f93d2195a607e46
+    md5: 360b8f1b80b1e5968e2f212e17fd72c8
+    size: 13809
   - relpath: raw/Hopeless Effort#1472/matchs/EUW1_6629165847.json
     md5: 8543cc54a1e856fba533079700b86e76
   - relpath: raw/Hopeless Effort#1472/matchs/EUW1_6629276814.json
@@ -1993,7 +2023,8 @@ outs:
   - relpath: raw/Jäger Master#EUW/.DS_Store
     md5: 1691e6aceabc107ca83a51356790bd7c
   - relpath: raw/Jäger Master#EUW/identity.json
-    md5: 812ae2c15a6435e6c664da7911ff72b5
+    md5: ddc2c626797bda24f24e746af89cfb9e
+    size: 5774
   - relpath: raw/Jäger Master#EUW/matchs/EUW1_6591640133.json
     md5: df2d8948339ace55e822f6fbe1d57cb5
   - relpath: raw/Jäger Master#EUW/matchs/EUW1_6594266300.json
@@ -2455,7 +2486,8 @@ outs:
   - relpath: raw/Jäger Master#EUW/matchs/EUW1_6957396120.json
     md5: 7174a6627f7dd9ab02372126d5a369f7
   - relpath: raw/Lord Malvo#EUW/identity.json
-    md5: 43b3b9e526c5b9516f0aec6bbd5b1e63
+    md5: 74fdfecad9890709def17d42acab27dc
+    size: 18186
   - relpath: raw/Lord Malvo#EUW/matchs/EUW1_6490404176.json
     md5: c3a471b51cebe5cbedf024b03303c67e
   - relpath: raw/Lord Malvo#EUW/matchs/EUW1_6490790253.json
@@ -3017,7 +3049,8 @@ outs:
   - relpath: raw/Lord Malvo#EUW/matchs/EUW1_6961325478.json
     md5: f72cdaf0b18f7ca58ceb2be4a4e3d21f
   - relpath: raw/M Fondue#VNB/identity.json
-    md5: 13166438eb868cb776c8c04ceae488a0
+    md5: 54ab0f450c3a420ec3a95194e9df9e18
+    size: 13071
   - relpath: raw/M Fondue#VNB/matchs/EUW1_6435548883.json
     md5: bac5b984319de45bf58c1cf02523a5a5
   - relpath: raw/M Fondue#VNB/matchs/EUW1_6438464213.json
@@ -4197,7 +4230,8 @@ outs:
   - relpath: raw/M Fondue#VNB/matchs/EUW1_6962105666.json
     md5: 962d77c2a9793491e8549fadfc69d378
   - relpath: raw/Raillon#EUW/identity.json
-    md5: c63f2e2ab7153a91098f73ad19eec0e2
+    md5: 23e1560c015ee24330f13f6d1910ae96
+    size: 3947
   - relpath: raw/Raillon#EUW/matchs/EUW1_6595181259.json
     md5: c4402b8b971180a1ac43d989bd4c3ce3
   - relpath: raw/Raillon#EUW/matchs/EUW1_6595592165.json
@@ -4419,7 +4453,8 @@ outs:
   - relpath: raw/Raillon#EUW/matchs/EUW1_6954227689.json
     md5: bf2eaf62a3ea0ddd888c71c89fe1e068
   - relpath: raw/ScanVisor#EUW/identity.json
-    md5: 876cdbaddbd7167502058c77868c0204
+    md5: 7fc0bb8cb786251576762394d1001280
+    size: 7561
   - relpath: raw/ScanVisor#EUW/matchs/EUW1_6580113451.json
     md5: 7cc22949c42bbd3b0356d521eb98d4b6
   - relpath: raw/ScanVisor#EUW/matchs/EUW1_6586623285.json
@@ -4817,7 +4852,8 @@ outs:
   - relpath: raw/ScanVisor#EUW/matchs/EUW1_6957396120.json
     md5: 7174a6627f7dd9ab02372126d5a369f7
   - relpath: raw/Sivusen#EUW/identity.json
-    md5: bbf02edd75e495525649298a951c9a5a
+    md5: 39b066f14cbe19903f1b1deeb88a06d4
+    size: 11604
   - relpath: raw/Sivusen#EUW/matchs/EUW1_6535138408.json
     md5: e2e99458685fd15d6514bf6bf3890ea3
   - relpath: raw/Sivusen#EUW/matchs/EUW1_6538084561.json
@@ -5607,7 +5643,8 @@ outs:
   - relpath: raw/Sivusen#EUW/matchs/EUW1_6948441476.json
     md5: 21362896d194f5ab124cacc681332697
   - relpath: raw/Xx doudou95 xX#EUW/identity.json
-    md5: 31fc92acea9729c02f64669d7db3806f
+    md5: ee69267fa29cfd423bfb990e581a87f8
+    size: 7442
   - relpath: raw/Xx doudou95 xX#EUW/matchs/EUW1_6493123386.json
     md5: f239507d3f63dc693d800c208296f0fa
   - relpath: raw/Xx doudou95 xX#EUW/matchs/EUW1_6493314362.json
