@@ -20,7 +20,9 @@ for summoner in list_summoners:
         player = User(riot_id=riot_id, api_key=api_key)
         player.save()
     else:
-        print(f"User {folder_name} is already in the user collection.")
+        print(f"User {folder_name} is already in the user collection, checking for new matches.")
+        user_collection.user_objects[folder_name].refresh_user_matches(api_key)
+        user_collection.user_objects[folder_name].save()
 
 user_collection.refresh_collection(api_key=api_key)
 user_collection.fetch_collection_matchs(api_key=api_key)

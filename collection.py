@@ -3,12 +3,38 @@ import os
 import pandas as pd
 import re
 import time
+from utils import check_if_folder_exists
 from user import User
 
 
 class Collection:
     def __init__(self, api_key: str) -> None:
+        self.create_data_folder_if_missing()
         self.refresh_collection(api_key)
+
+    def create_data_folder_if_missing(self):
+        """
+        Creates a 'data' folder if it does not already exist.
+
+        This function checks if a folder named 'data' exists in the current directory.
+        If the folder exists, it prints a message indicating this. If the folder does not exist,
+        it creates the 'data' folder and prints a message indicating that it has been created.
+        """
+        data_layers = ["raw","trd","rfd"]
+        if check_if_folder_exists("data"):
+            print("Data folder already exists.")
+        else:
+            os.mkdir("data")
+            print("Data folder created.")
+
+        # Create each data layer
+        for layer in data_layers:
+            layer_path = os.path.join("data",layer)
+            if check_if_folder_exists(layer_path):
+                print(f"Data layer {layer} folder already exists.")
+            else:
+                os.mkdir(layer_path)
+                print(f"Data layer {layer} folder created.")
 
     def refresh_collection(self, api_key: str) -> None:
         data_path = "data/raw"
@@ -60,12 +86,11 @@ class Collection:
         for user in self.user_objects.keys():
             print(f"Starting refreshing user : {user}")
             user_object = self.user_objects[user]
-            user_object.create_data_folder_if_missing()
             user_object.create_user_folder_if_missing()
             user_object.create_matchs_folder_if_missing()
             unfetched_matchs = user_object.find_unfetched_matchs()
             for match in (
-                user_object.solo_duo_matchs_list + user_object.flex_matchs_list
+                user_object.matches_list
             ):
                 if match in unfetched_matchs:
                     request_count += 1
