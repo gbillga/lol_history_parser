@@ -11,7 +11,7 @@ class Collection:
         self.refresh_collection(api_key)
 
     def refresh_collection(self, api_key: str) -> None:
-        data_path = "data"
+        data_path = "data/raw"
         user_and_paths = {}
         user_object_dict = {}
         pattern = re.compile(r"^.{0,20}#.{2,6}$")
@@ -109,25 +109,27 @@ class Collection:
         all_matches = []
         for user in self.user_objects.keys():
             user_object = self.user_objects[user]
-            user_matchs_folder_path = os.path.join("data", user, "matchs")
+            user_matchs_folder_path = os.path.join("data/raw", user, "matchs")
             for match in os.listdir(user_matchs_folder_path):
                 match_file_path = user_matchs_folder_path + "/" + match
-                with open(match_file_path, encoding='utf-8') as f:
-                    match_info = json.load(f)['info']
-                    match_info['summoner_folder']= user
-                    participants = match_info['participants']
+                with open(match_file_path, encoding="utf-8") as f:
+                    match_info = json.load(f)["info"]
+                    match_info["summoner_folder"] = user
+                    participants = match_info["participants"]
                     participant_info = dict()
-                    del match_info['participants']
-                    del match_info['teams']
+                    del match_info["participants"]
+                    del match_info["teams"]
                     for participant in participants:
-                        if participant['puuid'] == user_object.puuid:
+                        if participant["puuid"] == user_object.puuid:
                             participant_info = participant
                     if len(participant_info) > 0:
                         match_info.update(participant_info)
                         all_matches.append(match_info)
                     else:
-                        print("Could not find corresponding participant information, disregarding game")
+                        print(
+                            "Could not find corresponding participant information, disregarding game"
+                        )
         all_matches = pd.DataFrame(all_matches)
         print(all_matches)
-        all_matches.to_csv("data/aggregate_data.csv", index=False)
 
+        all_matches.to_csv("data/trd/aggregate_data.csv", index=False)
