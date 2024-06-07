@@ -2,7 +2,6 @@ import json
 import os
 import pandas as pd
 import re
-import time
 from utils import check_if_folder_exists
 from user import User
 
@@ -20,7 +19,7 @@ class Collection:
         If the folder exists, it prints a message indicating this. If the folder does not exist,
         it creates the 'data' folder and prints a message indicating that it has been created.
         """
-        data_layers = ["raw","trd","rfd"]
+        data_layers = ["raw", "trd", "rfd"]
         if check_if_folder_exists("data"):
             print("Data folder already exists.")
         else:
@@ -29,7 +28,7 @@ class Collection:
 
         # Create each data layer
         for layer in data_layers:
-            layer_path = os.path.join("data",layer)
+            layer_path = os.path.join("data", layer)
             if check_if_folder_exists(layer_path):
                 print(f"Data layer {layer} folder already exists.")
             else:
@@ -89,15 +88,8 @@ class Collection:
             user_object.create_user_folder_if_missing()
             user_object.create_matchs_folder_if_missing()
             unfetched_matchs = user_object.find_unfetched_matchs()
-            for match in (
-                user_object.matches_list
-            ):
+            for match in user_object.matches_list:
                 if match in unfetched_matchs:
-                    request_count += 1
-                    if request_count % 100 == 0 and request_count != 0:
-                        print("\n\n===== I'm sleepy let's have a small nap =====n\n")
-                        time.sleep(120)
-
                     user_object.fetch_match(match_id=match, api_key=api_key)
             print("\n\n")
 
@@ -155,6 +147,5 @@ class Collection:
                             "Could not find corresponding participant information, disregarding game"
                         )
         all_matches = pd.DataFrame(all_matches)
-        print(all_matches)
 
         all_matches.to_csv("data/trd/aggregate_data.csv", index=False)

@@ -15,3 +15,5 @@ A .env should be created to be able to fetch any data from Riot Games API:
 
 Data can be either refetched from Riot Games API, or can be dvc pulled using `dvc pull` before running the main.py file.  
 On first usage, the command will open a Google authentification page to allow data retrieval from Google Drive.
+
+In order to refresh played matches for all users, `AUTO_REFRESH_USER=1` has to be added to .env file

@@ -1,6 +1,5 @@
 import os
-from utils import check_if_folder_exists
-from requests import get
+from utils import check_if_folder_exists, get_request_handling_riot_limit_rate
 import json
 import re
 
@@ -117,8 +116,7 @@ class User:
         Raises:
             Exception: If the request to the Riot Games API fails (non-200 status code).
         """
-
-        req = get(
+        req = get_request_handling_riot_limit_rate(
             f"https://{self.summoners_region}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{self.summoners_name}/{self.summoners_tag}?api_key={api_key}"
         )
 
@@ -131,15 +129,18 @@ class User:
 
     def refresh_user_matches(self, api_key: str) -> None:
         og_matches_number = len(self.matches_list)
-        newly_feched_matches =  self.get_all_matches(api_key=api_key)
+        newly_feched_matches = self.get_all_matches(api_key=api_key)
         self.matches_list = list(set(self.matches_list + newly_feched_matches))
         print(f"New matches found: {len(self.matches_list) - og_matches_number}")
-
 
     def get_all_matches(self, api_key: str) -> list:
         matches_list = []
         for queue in [400, 420, 430, 440, 450]:
-            matches_list.extend(self.get_matches_by_queue(matchs_list=[], start_index=0, api_key=api_key, queue=queue))
+            matches_list.extend(
+                self.get_matches_by_queue(
+                    matchs_list=[], start_index=0, api_key=api_key, queue=queue
+                )
+            )
         return matches_list
 
     def get_matches_by_queue(
@@ -164,8 +165,7 @@ class User:
         Raises:
             Exception: If the request to the Riot Games API fails (non-200 status code).
         """
-        print(f"Sending api call with start index {start_index}")
-        req = get(
+        req = get_request_handling_riot_limit_rate(
             f"https://{self.summoners_region}.api.riotgames.com/lol/match/v5/matches/by-puuid/{self.puuid}/ids?queue={queue}&start={start_index}&count=100&api_key={api_key}"
         )
 
@@ -202,7 +202,9 @@ class User:
             Prints a message indicating whether the directory was created or already existed.
         """
         user_data_folder_name = f"{self.summoners_name}#{self.summoners_tag}"
-        user_matchs_folder_path = os.path.join("data/raw", user_data_folder_name, "matchs")
+        user_matchs_folder_path = os.path.join(
+            "data/raw", user_data_folder_name, "matchs"
+        )
         user_data_folder_exists = check_if_folder_exists(user_matchs_folder_path)
         if user_data_folder_exists:
             print(f"User {user_data_folder_name} matchs folder already exists.")
@@ -231,7 +233,9 @@ class User:
             None.
         """
         user_data_folder_name = f"{self.summoners_name}#{self.summoners_tag}"
-        user_matchs_folder_path = os.path.join("data/raw", user_data_folder_name, "matchs")
+        user_matchs_folder_path = os.path.join(
+            "data/raw", user_data_folder_name, "matchs"
+        )
         matchs_folder_content = os.listdir(user_matchs_folder_path)
         already_fetched_files = []
         matchs_to_be_fetched = []
@@ -275,9 +279,11 @@ class User:
             Prints the size of the fetched match file.
         """
         user_data_folder_name = f"{self.summoners_name}#{self.summoners_tag}"
-        user_matchs_folder_path = os.path.join("data/raw", user_data_folder_name, "matchs")
+        user_matchs_folder_path = os.path.join(
+            "data/raw", user_data_folder_name, "matchs"
+        )
         print(f"Match {match_id} will be fecthed")
-        req = get(
+        req = get_request_handling_riot_limit_rate(
             f"https://{self.summoners_region}.api.riotgames.com/lol/match/v5/matches/{match_id}?api_key={api_key}"
         )
 

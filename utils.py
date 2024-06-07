@@ -1,6 +1,30 @@
 from urllib.parse import quote
 import json
 import os
+import pandas as pd
+from requests import get
+import time
+
+
+class SingletonMeta(type):
+    """
+    The Singleton class can be implemented in different ways in Python. Some
+    possible methods include: base class, decorator, metaclass. We will use the
+    metaclass because it is best suited for this purpose.
+    """
+
+    _instances = {}
+
+    def __call__(cls, *args, **kwargs):
+        """
+        Possible changes to the value of the `__init__` argument do not affect
+        the returned instance.
+        """
+        if cls not in cls._instances:
+            instance = super().__call__(*args, **kwargs)
+            cls._instances[cls] = instance
+        return cls._instances[cls]
+
 
 def encode_string(input: str) -> str:
     """
@@ -123,6 +147,24 @@ def get_list_summoners(file_path: str) -> list:
             ...
         ]
     """
-    with open(file_path, encoding='utf-8') as f:
+    with open(file_path, encoding="utf-8") as f:
         list_summoners = json.load(f)
     return list_summoners
+
+
+def read_trusted_dataframe(dataset_name: str) -> pd.DataFrame:
+    df_path = os.path.join("data/trd", dataset_name)
+    df = pd.read_csv(filepath_or_buffer=df_path, header=0, delimiter=",")
+
+    return df
+
+
+def get_request_handling_riot_limit_rate(request_url: str) -> dict:
+    request_response = get(request_url)
+
+    if request_response.status_code == 429:
+        print(f"=== Got 429 response from API, let's wait two minutes ===")
+        time.sleep(120)
+        request_response = get(request_url)
+
+    return request_response
