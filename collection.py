@@ -3,12 +3,38 @@ import os
 import pandas as pd
 import re
 import time
+from utils import check_if_folder_exists
 from user import User
 
 
 class Collection:
     def __init__(self, api_key: str) -> None:
+        self.create_data_folder_if_missing()
         self.refresh_collection(api_key)
+
+    def create_data_folder_if_missing(self):
+        """
+        Creates a 'data' folder if it does not already exist.
+
+        This function checks if a folder named 'data' exists in the current directory.
+        If the folder exists, it prints a message indicating this. If the folder does not exist,
+        it creates the 'data' folder and prints a message indicating that it has been created.
+        """
+        data_layers = ["raw","trd","rfd"]
+        if check_if_folder_exists("data"):
+            print("Data folder already exists.")
+        else:
+            os.mkdir("data")
+            print("Data folder created.")
+
+        # Create each data layer
+        for layer in data_layers:
+            layer_path = os.path.join("data",layer)
+            if check_if_folder_exists(layer_path):
+                print(f"Data layer {layer} folder already exists.")
+            else:
+                os.mkdir(layer_path)
+                print(f"Data layer {layer} folder created.")
 
     def refresh_collection(self, api_key: str) -> None:
         data_path = "data/raw"

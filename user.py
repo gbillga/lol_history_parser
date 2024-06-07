@@ -38,15 +38,10 @@ class User:
             if "puuid" not in kwargs
             else kwargs["puuid"]
         )
-        self.solo_duo_matchs_list = (
-            self.list_matchs(matchs_list=[], start_index=0, api_key=api_key, queue=420)
-            if "solo_duo_matchs_list" not in kwargs
-            else kwargs["solo_duo_matchs_list"]
-        )
-        self.flex_matchs_list = (
-            self.list_matchs(matchs_list=[], start_index=0, api_key=api_key, queue=440)
-            if "flex_matchs_list" not in kwargs
-            else kwargs["flex_matchs_list"]
+        self.matches_list = (
+            self.get_all_matches(api_key=api_key)
+            if "matches_list" not in kwargs
+            else kwargs["matches_list"]
         )
 
     @classmethod
@@ -78,43 +73,17 @@ class User:
             riot_id,
             api_key,
             puuid=user_data["puuid"],
-            solo_duo_matchs_list=user_data["solo_duo_matchs_list"],
-            flex_matchs_list=user_data["flex_matchs_list"],
+            matches_list=user_data["matches_list"],
         )
 
     def save(self):
         """
         Saves the User object as a JSON file.
         """
-        self.create_data_folder_if_missing()
         user_path = self.create_user_folder_if_missing()
         saving_path = os.path.join(user_path, "identity.json")
         with open(saving_path, "w+") as json_file:
             json.dump(self.__dict__, json_file)
-
-    def create_data_folder_if_missing(self):
-        """
-        Creates a 'data' folder if it does not already exist.
-
-        This function checks if a folder named 'data' exists in the current directory.
-        If the folder exists, it prints a message indicating this. If the folder does not exist,
-        it creates the 'data' folder and prints a message indicating that it has been created.
-        """
-        data_layers = ["raw","trd","rfd"]
-        if check_if_folder_exists("data"):
-            print("Data folder already exists.")
-        else:
-            os.mkdir("data")
-            print("Data folder created.")
-
-        # Create each data layer
-        for layer in data_layers:
-            layer_path = os.path.join("data",layer)
-            if check_if_folder_exists(layer_path):
-                print(f"Data layer {layer} folder already exists.")
-            else:
-                os.mkdir(layer_path)
-                print("Data layer {layer} folder created.")
 
     def create_user_folder_if_missing(self):
         """
@@ -160,7 +129,20 @@ class User:
 
         return response["puuid"]
 
-    def list_matchs(
+    def refresh_user_matches(self, api_key: str) -> None:
+        og_matches_number = len(self.matches_list)
+        newly_feched_matches =  self.get_all_matches(api_key=api_key)
+        self.matches_list = list(set(self.matches_list + newly_feched_matches))
+        print(f"New matches found: {len(self.matches_list) - og_matches_number}")
+
+
+    def get_all_matches(self, api_key: str) -> list:
+        matches_list = []
+        for queue in [400, 420, 430, 440, 450]:
+            matches_list.extend(self.get_matches_by_queue(matchs_list=[], start_index=0, api_key=api_key, queue=queue))
+        return matches_list
+
+    def get_matches_by_queue(
         self, matchs_list: list, start_index: int, api_key: str, queue: int
     ) -> list:
         """
@@ -191,7 +173,7 @@ class User:
             matchs_list += req.json()
 
             if len(req.json()) == 100:
-                return self.list_matchs(
+                return self.get_matches_by_queue(
                     matchs_list=matchs_list,
                     start_index=start_index + 100,
                     api_key=api_key,
