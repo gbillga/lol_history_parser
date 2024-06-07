@@ -86,12 +86,11 @@ class Collection:
         for user in self.user_objects.keys():
             print(f"Starting refreshing user : {user}")
             user_object = self.user_objects[user]
-            user_object.create_data_folder_if_missing()
             user_object.create_user_folder_if_missing()
             user_object.create_matchs_folder_if_missing()
             unfetched_matchs = user_object.find_unfetched_matchs()
             for match in (
-                user_object.solo_duo_matchs_list + user_object.flex_matchs_list
+                user_object.matches_list
             ):
                 if match in unfetched_matchs:
                     request_count += 1

@@ -243,7 +243,7 @@ class User:
                 already_fetched_files.append(file.split(".json")[0])
 
         # Check if identity matchs are fetched, if not add to output list
-        for match in self.flex_matchs_list + self.solo_duo_matchs_list:
+        for match in self.matches_list:
             if match not in already_fetched_files:
                 matchs_to_be_fetched.append(match)
 
