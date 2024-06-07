@@ -100,12 +100,21 @@ class User:
         If the folder exists, it prints a message indicating this. If the folder does not exist,
         it creates the 'data' folder and prints a message indicating that it has been created.
         """
-        data_folder_exists = check_if_folder_exists("data")
-        if data_folder_exists:
+        data_layers = ["raw","trd","rfd"]
+        if check_if_folder_exists("data"):
             print("Data folder already exists.")
         else:
             os.mkdir("data")
             print("Data folder created.")
+
+        # Create each data layer
+        for layer in data_layers:
+            layer_path = os.path.join("data",layer)
+            if check_if_folder_exists(layer_path):
+                print(f"Data layer {layer} folder already exists.")
+            else:
+                os.mkdir(layer_path)
+                print("Data layer {layer} folder created.")
 
     def create_user_folder_if_missing(self):
         """
@@ -117,7 +126,7 @@ class User:
         it prints a message indicating this.
         """
         user_data_folder_name = f"{self.summoners_name}#{self.summoners_tag}"
-        user_data_folder_path = os.path.join("data", user_data_folder_name)
+        user_data_folder_path = os.path.join("data/raw", user_data_folder_name)
         user_data_folder_exists = check_if_folder_exists(user_data_folder_path)
         if user_data_folder_exists:
             print(f"User {user_data_folder_name} folder already exists.")
@@ -162,9 +171,11 @@ class User:
             start_index (int): The starting index for the API call.
             api_key (str): The API key for authenticating the request to the Riot Games API.
             queue (int): The queue type to filter the matches.
+                        400 is for 5v5 Normal Draft.
                         420 is for 5v5 Ranked Solo games.
+                        430 is for 5v5 Normal Blind.
                         440 is for 5v5 Ranked Flex games.
-
+                        450 is for ARAM.
         Returns:
             list: A list containing all the match IDs from the paginated API.
 
@@ -209,7 +220,7 @@ class User:
             Prints a message indicating whether the directory was created or already existed.
         """
         user_data_folder_name = f"{self.summoners_name}#{self.summoners_tag}"
-        user_matchs_folder_path = os.path.join("data", user_data_folder_name, "matchs")
+        user_matchs_folder_path = os.path.join("data/raw", user_data_folder_name, "matchs")
         user_data_folder_exists = check_if_folder_exists(user_matchs_folder_path)
         if user_data_folder_exists:
             print(f"User {user_data_folder_name} matchs folder already exists.")
@@ -238,7 +249,7 @@ class User:
             None.
         """
         user_data_folder_name = f"{self.summoners_name}#{self.summoners_tag}"
-        user_matchs_folder_path = os.path.join("data", user_data_folder_name, "matchs")
+        user_matchs_folder_path = os.path.join("data/raw", user_data_folder_name, "matchs")
         matchs_folder_content = os.listdir(user_matchs_folder_path)
         already_fetched_files = []
         matchs_to_be_fetched = []
@@ -282,7 +293,7 @@ class User:
             Prints the size of the fetched match file.
         """
         user_data_folder_name = f"{self.summoners_name}#{self.summoners_tag}"
-        user_matchs_folder_path = os.path.join("data", user_data_folder_name, "matchs")
+        user_matchs_folder_path = os.path.join("data/raw", user_data_folder_name, "matchs")
         print(f"Match {match_id} will be fecthed")
         req = get(
             f"https://{self.summoners_region}.api.riotgames.com/lol/match/v5/matches/{match_id}?api_key={api_key}"
